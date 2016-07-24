@@ -7,7 +7,7 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
-  color: #606c71; }
+  color: #000; }
 
 a {
   color: #1e6bb8;
@@ -59,13 +59,27 @@ a {
   background-color: #159957;
   background-image: linear-gradient(120deg, #155799, #159957); }
 
+.page-header a {
+  color: #fff;
+  text-decoration: none; }
+
+.page-header .breadtip>* {
+  text-align: center;
+  background-color: #159799;
+  background-image: linear-gradient(120deg, #159957, #159799);
+  width: 20rem;
+  display: inline-block; }
+.page-header .breadtip .activetip {
+  background-color: #bf3f7c;
+  background-image: none; }
+
 @media screen and (min-width: 64em) {
   .page-header {
-    padding: 5rem 6rem; } }
+    padding: 2rem 6rem; } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .page-header {
-    padding: 3rem 4rem; } }
+    padding: 2rem 4rem; } }
 
 @media screen and (max-width: 42em) {
   .page-header {
@@ -202,8 +216,19 @@ a {
   margin: 1rem 0;
   background-color: #eff0f1;
   border: 0; }
+.main-content .line {
+  margin: 0 1rem; }
+.main-content .line * {
+  display: inline; }
 
-@media screen and (min-width: 64em) {
+@media screen and (min-width: 86em ) {
+  .main-content {
+    max-width: 86rem;
+    padding: 2rem 6rem;
+    margin: 0 auto;
+    font-size: 1.1rem; } }
+
+@media screen and (min-width: 64em) and ( max-width: 86em ) {
   .main-content {
     max-width: 64rem;
     padding: 2rem 6rem;
