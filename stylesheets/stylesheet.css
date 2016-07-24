@@ -63,6 +63,16 @@ a {
   color: #fff;
   text-decoration: none; }
 
+.page-header .breadtip>* {
+  text-align: center;
+  background-color: #159799;
+  background-image: linear-gradient(120deg, #159957, #159799);
+  width: 20rem;
+  display: inline-block; }
+.page-header .breadtip .activetip {
+  background-color: #bf3f7c;
+  background-image: none; }
+
 @media screen and (min-width: 64em) {
   .page-header {
     padding: 2rem 6rem; } }
@@ -211,7 +221,14 @@ a {
 .main-content .line * {
   display: inline; }
 
-@media screen and (min-width: 64em) {
+@media screen and (min-width: 86em ) {
+  .main-content {
+    max-width: 86rem;
+    padding: 2rem 6rem;
+    margin: 0 auto;
+    font-size: 1.1rem; } }
+
+@media screen and (min-width: 64em) and ( max-width: 86em ) {
   .main-content {
     max-width: 64rem;
     padding: 2rem 6rem;
