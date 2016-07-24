@@ -15,7 +15,7 @@
             var wh = $(window).outerHeight(),
             hh = $('.page-header').outerHeight(),
             fh = $('.site-footer').outerHeight(),
-            rh = ( wh - hh - fh ) / 6;
+            rh = Math.ceil( ( wh - hh - fh ) / 6 );
             $('#welcome').readmore({collapsedHeight: rh});
             $('#whatis').readmore({collapsedHeight: rh});
             $('#support').readmore({collapsedHeight: rh});
@@ -28,7 +28,7 @@
       <div class="breadtip">
         <h2 class="activetip"><a href="/">top</a></h2>
         <h2><a href="/foruser/">利用者向けガイド</a></h2>
-        <h2><a href="/fordev/">開発協力者向けガイド</a></h2>
+        <h2><a href="/fordev/">開発者向けガイド</a></h2>
         <h2><a href="/arcive/">資料</a></h2>
       </div>
     </section>
