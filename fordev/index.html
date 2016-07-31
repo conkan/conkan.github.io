@@ -40,15 +40,24 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
         <ol type="1">
             <li>対応するIssueに、自分が担当する旨明記する。</li>
             <li>対象リポジトリを自分のGitHubリポジトリにforkする。<br/><small>これは1度でいい</small></li>
-            <li>forkした対象リポジトリをcloneし、開発環境を整える。<br/><small>これも1度でいい</small></li>
-            <li>cloneしたローカルリポジトリで、開発用branchを生成する。<br/>branch名は、対応するIssueに基づいたものとする。(最悪Issue番号)</li>
-            <li>開発用branchで実際の修正とテストを実施し、commitする。</li>
-            <li>開発用branchを、自分のGitHubリポジトリにpushする。</li>
-            <li>pull-requestを発行する。</li>
+            <li>forkした自分のGitHubリポジトリで、<a href="#gitflow">git flowモデル</a>に従って、実装及びテストを実施する。
+            <div><small>branchタイプは「feature」、branch名は対応するIssueに基づいたもの(最悪Issue番号)とする</small></div></li>
+            <li>元ディレクトリのdevelop branchに対して、pull-requestを発行する。</li>
         </ol>
 
-        なお、どのbranchを開発用branchの起点とするかは、リポジトリごとに検討中である。
-    </div></li>
+        リポジトリ管理者(GitHub Organization conkan のowner権限をもつ者)は、開発者からのpull-requestに応じて、レビュー、フィードバックし、問題がなければdevelop branchにマージする。<br/>
+        develop branchは、開発版としてデプロイし、運用する。<br/>
+        リポジトリ管理者は、適切なタイミングでrelease branchを作成し、正式版として管理する。
+    </div>
+
+    <div class="comment"><span id="gitflow" class="anchor">※</span>
+        git flowについては 「Gitブランチを使いこなすgit-flow／GitHub Flow入門」
+        <dl>
+            <dd><a href="http://www.atmarkit.co.jp/ait/articles/1311/28/news042.html" target="_blank">git-flowのインストールとブランチ運用前のリポジトリ準備</a></dd>
+            <dd><a href="http://www.atmarkit.co.jp/ait/articles/1401/06/news013.html" target="_blank">図とコマンドで分かる！ git-flowによる開発の流れと使い方</a></dd>
+        </dl>
+        などを参考のこと</div>
+    </li>
 </ul>
 
 <h2>
@@ -57,32 +66,27 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
 <ul>
     <li><a href="https://github.com/conkan/conkan.github.io" target="_blank">conkan.github.io</a>
     <div>
-        conkan GitHubページのリポジトリ。<br/>
-        このリポジトリの起点branchは、develop とする。
+        conkan GitHubページのリポジトリ。
     </div></li>
 
     <li><a href="https://github.com/conkan/prog_regist" target="_blank">prog_regist</a>
     <div>
-        企画申込フロントエンドのリポジトリ。<br/>
-        このリポジトリの起点branchは、developとする。
+        企画申込フロントエンドのリポジトリ。
     </div></li>
 
     <li><a href="https://github.com/conkan/patic_regist" target="_blank">patic_regist</a>
     <div>
-        参加申込フロントエンドのリポジトリ。<br/>
-        このリポジトリの起点branchは、developとする。
+        参加申込フロントエンドのリポジトリ。
     </div></li>
 
     <li><a href="https://github.com/conkan/conkan_program" target="_blank">conkan_program</a>
     <div>
-        conkan企画管理サブシステムのリポジトリ。<br/>
-        このリポジトリの起点branchは、検討中である。
+        conkan企画管理サブシステムのリポジトリ。
     </div></li>
 
     <li><a href="https://github.com/conkan/conkan_stakeholder" target="_blank">conkan_stakeholder</a>
     <div>
-        conkan関係者管理サブシステムのリポジトリ。<br/>
-        このリポジトリの起点branchは、検討中である。
+        conkan関係者管理サブシステムのリポジトリ。
     </div></li>
 </ul>
 

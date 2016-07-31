@@ -221,6 +221,13 @@ a {
 .main-content .line * {
   display: inline; }
 
+.main-content .comment {
+  margin-left: 2rem;
+  font-size: 0.8rem;
+  background-color: #DDDDDD; }
+.main-content .comment * {
+  margin-top: 0;
+  margin-bottom: 0;}
 @media screen and (min-width: 86em ) {
   .main-content {
     max-width: 86rem;
