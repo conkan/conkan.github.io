@@ -226,6 +226,12 @@ a {
 .main-content .line * {
   display: inline; }
 
+.main-content div.replist {
+  margin-left: 2rem; }
+  .main-content div.replist table th, .main-content div.replist table td {
+    border: 0px;
+    text-align: left; }
+
 .main-content .comment {
   margin-left: 2rem;
   font-size: 0.8rem;
