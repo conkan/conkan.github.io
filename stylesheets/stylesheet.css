@@ -205,6 +205,12 @@ a {
   .main-content table th, .main-content table td {
     padding: 0.5rem 1rem;
     border: 1px solid #e9ebec; }
+.main-content #dockername th {
+  padding: 0 0.5rem 0 0.5rem;
+  text-align: center; }
+.main-content #dockername td {
+  padding: 0 0.5rem 0 0.5rem;
+  vertical-align: top; }
 .main-content dl {
   padding: 0; }
   .main-content dl dt {
@@ -229,11 +235,14 @@ a {
 .main-content div.replist {
   margin-left: 2rem; }
   .main-content div.replist table th, .main-content div.replist table td {
-    border: 0px;
-    text-align: left; }
+    padding-top: 0;
+    padding-bottom: 0; }
+  .main-content div.replist table th {
+    text-align: right; }
 
 .main-content .comment {
   margin-left: 2rem;
+  margin-right: 4rem;
   font-size: 0.8rem;
   background-color: #DDDDDD; }
 .main-content .comment * {
