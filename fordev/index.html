@@ -30,7 +30,10 @@
   <div class="breadtip">
     <h2><a href="/">top</a></h2>
     <h2><a href="/foruser/">利用者向けガイド</a></h2>
-    <h2 class="activetip"><a href="/fordev/">開発者向けガイド</a></h2>
+    <h2 class="activetip"><a href="/fordev/">開発者向けガイド</a>
+        <div class="subtip"><a href="/fordev/devops.html">環境構築</a></div>
+        <div class="subtip"><a href="/fordev/devflow.html">開発フロー</a></div>
+    </h2>
     <h2><a href="/arcive/">資料</a></h2>
   </div>
 </section>
@@ -63,9 +66,10 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
             GitHubを介してconkanの開発に参加するためには、最低限GitHubのアカウントが必要である。<br/>
             GitHubにおいて、conkanのリポジトリはすべて<strong>conkan Organization</strong>(組織)の管理下とする。<br/>
             <br/>
-            実際の開発は、<a href="devflow.html">GitHubを利用した分散開発フロー</a>に従った分散開発で進めてゆく。。<br/>
+            開発環境は、<a href="/fordev/devops.html">開発環境構築方法</a>に従って構築する。
+            さらに開発作業は、<a href="/fordev/devflow.html">GitHubを利用した分散開発フロー</a>に従った分散開発で進めてゆく。<br/>
             <div class="comment">
-                <a href="/">本サイト</a>もGitHub Pageの機能を利用して作成しているため、その修正も原則として<a href="devflow.html">GitHubを利用した分散開発フロー</a>に従う。
+                <a href="/">本サイト</a>もGitHub Pageの機能を利用して作成しているため、その修正も原則として<a href="/fordev/devflow.html">GitHubを利用した分散開発フロー</a>に従う。<small>開発環境構築は不要</small>
             </div>
         </div> <!-- /github -->
     </li>
@@ -73,9 +77,7 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
         <div id="dockerhub">
             運用者が利用するDockerコンテナを格納する場。<br/>
             正式版のDockerコンテナイメージを格納する。<br/>
-            必要に応じて、開発版のDockerコンテナイメージを格納する場合もある。<br/>
-            <small>(開発版動作プラットフォームにDockerコンテナの形で提供する必要がある場合など)</small><br/>
-            <br/>
+            <small>正式版Dockerコンテナイメージは、その中にシステムのソースすべてを含む</small><br/>
             Dockerコンテナイメージの命名規則は、下記のとおりとする。
             <table id="dockername">
                 <tr>
@@ -88,19 +90,24 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
                     <td><a href="#repository-overview">リポジトリ一覧</a>のDockerHubリポジトリ名</td><td></td>
                     <td>正式版<br/>
                         最新正式<br/>
-                        開発版</td>
                     <th>n.nn<br/>
-                        stable<br/>
                         latest</th>
                 </tr>
             </table>
+            なお、開発版のDockerコンテナイメージは別のリポジトリに格納する。<br/>
+            <small>開発版Dockerコンテナイメージは、その中にはシステムのソースは含まず、コンテナ起動ホスト上にcloneしたGitをマウントする</small><br/>
+            Dockerコンテナイメージの命名規則は、特に定めない。
+            <div class="memo">
+                現在、conkan-program用にsrem/conkan:latestを使用
+            </div>
+            <br/>
         </div><!-- /dockerhub -->
     </li>
 </ul>
 
 <h3><a id="repository-overview" class="anchor" href="#repository-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>リポジトリ一覧</h3>
 
-<div id="replist" class="replist">
+<div id="replist" class="tbllist">
     <table>
         <tr>
             <th>&nbsp;</th>
@@ -113,14 +120,14 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
             <td>(存在しない)</td>
         </tr>
         <tr>
-            <th>企画申込フロントエンド</th>
-            <td><a href="https://github.com/conkan/prog_regist" target="_blank">prog_regist</a></td>
-            <td><a href="https://hub.docker.com/r/conkan/prog_regist/" target="_blank">prog_regist</a></td>
-        </tr>
-        <tr>
             <th>参加申込フロントエンド</th>
             <td><a href="https://github.com/conkan/patic_regist" target="_blank">patic_regist</a></td>
             <td><a href="https://hub.docker.com/r/conkan/patic_regist/" target="_blank">patic_regist</a></td>
+        </tr>
+        <tr>
+            <th>企画申込フロントエンド</th>
+            <td><a href="https://github.com/conkan/prog_regist" target="_blank">prog_regist</a></td>
+            <td><a href="https://hub.docker.com/r/conkan/prog_regist/" target="_blank">prog_regist</a></td>
         </tr>
         <tr>
             <th>conkan企画管理サブシステム</th>
@@ -135,7 +142,8 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
     </table>
     <br/>
     <div class="comment">
-        ※注 まだリポジトリ実体が存在しない物もある
+        ※注 まだリポジトリ実体が存在しない物もある<br/>
+        また、フロントエンドはDockerコンテナを使わず、httpdサーバが動作しているホストの適切な部分に、直接Git Clone する運用でも構わない
     </div>
 </div>  <!-- /replist -->
 
