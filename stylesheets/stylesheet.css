@@ -205,6 +205,12 @@ a {
   .main-content table th, .main-content table td {
     padding: 0.5rem 1rem;
     border: 1px solid #e9ebec; }
+.main-content #dockername th {
+  padding: 0 0.5rem 0 0.5rem;
+  text-align: center; }
+.main-content #dockername td {
+  padding: 0 0.5rem 0 0.5rem;
+  vertical-align: top; }
 .main-content dl {
   padding: 0; }
   .main-content dl dt {
@@ -226,13 +232,32 @@ a {
 .main-content .line * {
   display: inline; }
 
+.main-content div.tbllist {
+  margin-left: 2rem; }
+  .main-content div.tbllist table th, .main-content div.tbllist table td {
+    padding-top: 0;
+    padding-bottom: 0; }
+  .main-content div.tbllist table th {
+    text-align: right; }
+
 .main-content .comment {
   margin-left: 2rem;
+  margin-right: 4rem;
   font-size: 0.8rem;
   background-color: #DDDDDD; }
 .main-content .comment * {
   margin-top: 0;
   margin-bottom: 0;}
+
+.main-content .memo {
+  margin-left: 2rem;
+  margin-right: 4rem;
+  font-size: 0.8rem;
+  color: darkgreen; }
+.main-content .memo * {
+  margin-top: 0;
+  margin-bottom: 0;}
+
 @media screen and (min-width: 86em ) {
   .main-content {
     max-width: 86rem;
