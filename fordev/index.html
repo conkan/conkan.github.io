@@ -8,6 +8,20 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="/stylesheets/github-light.css" media="screen">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/readmore.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var wh = $(window).outerHeight(),
+            hh = $('.page-header').outerHeight(),
+            fh = $('.site-footer').outerHeight(),
+            rh = Math.ceil( ( wh - hh - fh ) / 10 );
+            $('#cybozu').readmore({collapsedHeight: rh});
+            $('#github').readmore({collapsedHeight: rh});
+            $('#dockerhub').readmore({collapsedHeight: rh});
+            $('#replist').readmore({collapsedHeight: rh});
+        });
+    </script>
   </head>
   <body>
 
@@ -16,7 +30,10 @@
   <div class="breadtip">
     <h2><a href="/">top</a></h2>
     <h2><a href="/foruser/">利用者向けガイド</a></h2>
-    <h2 class="activetip"><a href="/fordev/">開発者向けガイド</a></h2>
+    <h2 class="activetip"><a href="/fordev/">開発者向けガイド</a>
+        <div class="subtip"><a href="/fordev/devops.html">環境構築</a></div>
+        <div class="subtip"><a href="/fordev/devflow.html">開発フロー</a></div>
+    </h2>
     <h2><a href="/arcive/">資料</a></h2>
   </div>
 </section>
@@ -29,66 +46,106 @@ conkanの開発は、下記のツールを使ってオンラインで進めて�
 
 <ul>
     <li><a href="https://cybozulive.com/1_205802/top/top" target="_blank">サイボウズLive conkan開発グループ</a>
-    <div>
-        機能要求(解決したい問題の提案)、不具合の報告、問題解決方法の議論 など、システムの外部から観た議論は、サイボウズLiveのconkan開発グループで実施する。<br/>
-        サイボウズLiveのグループは招待制なので、参加希望者はメールにて<a mailto="conkan-dev@s-rem.jp">conkan-dev@s-rem.jp</a>にその旨を連絡のこと。<br/>
-        また、評価用や開発用conkanのメンバ登録時の本人同定は、このconkan開発グループに参加しているかどうかに依存する。
-    </div></li>
+        <div id="cybozu">
+            機能要求(解決したい問題の提案)、不具合の報告、問題解決方法検討 など、システムの外部から観た議論/コミュニケーションの場。
+            <div class="comment">
+                「何を作るか」「どうみせるか」を議論するのが趣旨
+            </div>
+            サイボウズLiveのグループは招待制なので、参加希望者はメールにて<a mailto="conkan-dev@s-rem.jp">conkan-dev@s-rem.jp</a>にその旨を連絡のこと。<br/>
+            また、評価用conkanのメンバ登録時の本人同定は、この<a href="https://cybozulive.com/1_205802/top/top" target="_blank">conkan開発グループ</a>に参加しているかどうかで判断する。
+        </div> <!-- /cybozu -->
+    </li>
     <li><a href="https://github.com/conkan" class="user-mention" target="_blank">GitHubリポジトリ</a>
-    <div>
-        リポジトリには成果物(ソースコード)や開発者向け内部資料を格納する。さらに、実装に関する議論には、Issueのcomment機能を利用する。<br/>
-        リポジトリを使った分散開発にあたり、各開発者は原則として下記の手順を取る。
-        <ol type="1">
-            <li>対応するIssueに、自分が担当する旨明記する。</li>
-            <li>対象リポジトリを自分のGitHubリポジトリにforkする。<br/><small>これは1度でいい</small></li>
-            <li>forkした自分のGitHubリポジトリで、<a href="#gitflow">git flowモデル</a>に従って、実装及びテストを実施する。
-            <div><small>branchタイプは「feature」、branch名は対応するIssueに基づいたもの(最悪Issue番号)とする</small></div></li>
-            <li>元ディレクトリのdevelop branchに対して、pull-requestを発行する。</li>
-        </ol>
-
-        リポジトリ管理者(GitHub Organization conkan のowner権限をもつ者)は、開発者からのpull-requestに応じて、レビュー、フィードバックし、問題がなければdevelop branchにマージする。<br/>
-        develop branchは、開発版としてデプロイし、運用する。<br/>
-        リポジトリ管理者は、適切なタイミングでrelease branchを作成し、正式版として管理する。
-    </div>
-
-    <div class="comment"><span id="gitflow" class="anchor">※</span>
-        git flowについては 「Gitブランチを使いこなすgit-flow／GitHub Flow入門」
-        <dl>
-            <dd><a href="http://www.atmarkit.co.jp/ait/articles/1311/28/news042.html" target="_blank">git-flowのインストールとブランチ運用前のリポジトリ準備</a></dd>
-            <dd><a href="http://www.atmarkit.co.jp/ait/articles/1401/06/news013.html" target="_blank">図とコマンドで分かる！ git-flowによる開発の流れと使い方</a></dd>
-        </dl>
-        などを参考のこと</div>
+        <div id="github">
+            成果物(ソースコード)や開発者向け内部資料を格納する場。<br/>
+            Dockerコンテナの形で提供しないモジュール(フロントエンド)を配布する場でもある。<br/>
+            さらに、Issueのcomment機能を利用した、実装に関する議論の場でもある。
+            <div class="comment">
+                「どう作るか」「作ったものは意図通り動くか」を議論するのが趣旨
+            </div>
+            GitHubを介してconkanの開発に参加するためには、最低限GitHubのアカウントが必要である。<br/>
+            GitHubにおいて、conkanのリポジトリはすべて<strong>conkan Organization</strong>(組織)の管理下とする。<br/>
+            <br/>
+            開発環境は、<a href="/fordev/devops.html">開発環境構築方法</a>に従って構築する。
+            さらに開発作業は、<a href="/fordev/devflow.html">GitHubを利用した分散開発フロー</a>に従った分散開発で進めてゆく。<br/>
+            <div class="comment">
+                <a href="/">本サイト</a>もGitHub Pageの機能を利用して作成しているため、その修正も原則として<a href="/fordev/devflow.html">GitHubを利用した分散開発フロー</a>に従う。<small>開発環境構築は不要</small>
+            </div>
+        </div> <!-- /github -->
+    </li>
+    <li><a href="https://hub.docker.com/u/conkan/" class="user-mention" target="_blank">Docker Hubリポジトリ</a>
+        <div id="dockerhub">
+            運用者が利用するDockerコンテナを格納する場。<br/>
+            正式版のDockerコンテナイメージを格納する。<br/>
+            <small>正式版Dockerコンテナイメージは、その中にシステムのソースすべてを含む</small><br/>
+            Dockerコンテナイメージの命名規則は、下記のとおりとする。
+            <table id="dockername">
+                <tr>
+                    <th>conkan</th><td>/</td>
+                    <th>&lt;サブシステム|フロントエンド名&gt;</th><td>:</td>
+                    <th colspan="2">&lt;タグ&gt;</th>
+                </tr>
+                <tr>
+                    <td><strong>conkan</strong>固定</td><td></td>
+                    <td><a href="#repository-overview">リポジトリ一覧</a>のDockerHubリポジトリ名</td><td></td>
+                    <td>正式版<br/>
+                        最新正式<br/>
+                    <th>n.nn<br/>
+                        latest</th>
+                </tr>
+            </table>
+            なお、開発版のDockerコンテナイメージは別のリポジトリに格納する。<br/>
+            <small>開発版Dockerコンテナイメージは、その中にはシステムのソースは含まず、コンテナ起動ホスト上にcloneしたGitをマウントする</small><br/>
+            Dockerコンテナイメージの命名規則は、特に定めない。
+            <div class="memo">
+                現在、conkan-program用にsrem/conkan:latestを使用
+            </div>
+            <br/>
+        </div><!-- /dockerhub -->
     </li>
 </ul>
 
-<h2><a id="repository-overview" class="anchor" href="#repository-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>リポジトリ一覧</h2>
+<h3><a id="repository-overview" class="anchor" href="#repository-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>リポジトリ一覧</h3>
 
-<ul>
-    <li><a href="https://github.com/conkan/conkan.github.io" target="_blank">conkan.github.io</a>
-    <div>
-        conkan GitHubページのリポジトリ。
-    </div></li>
-
-    <li><a href="https://github.com/conkan/prog_regist" target="_blank">prog_regist</a>
-    <div>
-        企画申込フロントエンドのリポジトリ。
-    </div></li>
-
-    <li><a href="https://github.com/conkan/patic_regist" target="_blank">patic_regist</a>
-    <div>
-        参加申込フロントエンドのリポジトリ。
-    </div></li>
-
-    <li><a href="https://github.com/conkan/conkan_program" target="_blank">conkan_program</a>
-    <div>
-        conkan企画管理サブシステムのリポジトリ。
-    </div></li>
-
-    <li><a href="https://github.com/conkan/conkan_stakeholder" target="_blank">conkan_stakeholder</a>
-    <div>
-        conkan関係者管理サブシステムのリポジトリ。
-    </div></li>
-</ul>
+<div id="replist" class="tbllist">
+    <table>
+        <tr>
+            <th>&nbsp;</th>
+            <th>GitHubリポジトリ名</th>
+            <th>DockerHubリポジトリ名</th>
+        </tr>
+        <tr>
+            <th>conkan GitHubページ</th>
+            <td><a href="https://github.com/conkan/conkan.github.io" target="_blank">conkan.github.io</a></td>
+            <td>(存在しない)</td>
+        </tr>
+        <tr>
+            <th>参加申込フロントエンド</th>
+            <td><a href="https://github.com/conkan/patic_regist" target="_blank">patic_regist</a></td>
+            <td><a href="https://hub.docker.com/r/conkan/patic_regist/" target="_blank">patic_regist</a></td>
+        </tr>
+        <tr>
+            <th>企画申込フロントエンド</th>
+            <td><a href="https://github.com/conkan/prog_regist" target="_blank">prog_regist</a></td>
+            <td><a href="https://hub.docker.com/r/conkan/prog_regist/" target="_blank">prog_regist</a></td>
+        </tr>
+        <tr>
+            <th>conkan企画管理サブシステム</th>
+            <td><a href="https://github.com/conkan/conkan_program" target="_blank">conkan_program</a></td>
+            <td><a href="https://hub.docker.com/r/conkan/conkan_program/" target="_blank">conkan_program</a></td>
+        </tr>
+        <tr>
+            <th>conkan関係者管理サブシステム</th>
+            <td><a href="https://github.com/conkan/conkan_stakeholder" target="_blank">conkan_stakeholder</a></td>
+            <td><a href="https://hub.docker.com/r/conkan/conkan_stakeholder/" target="_blank">conkan_stakeholder</a></td>
+        </tr>
+    </table>
+    <br/>
+    <div class="comment">
+        ※注 まだリポジトリ実体が存在しない物もある<br/>
+        また、フロントエンドはDockerコンテナを使わず、httpdサーバが動作しているホストの適切な部分に、直接Git Clone する運用でも構わない
+    </div>
+</div>  <!-- /replist -->
 
 <footer class="site-footer">
   <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
