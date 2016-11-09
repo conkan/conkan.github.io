@@ -34,65 +34,102 @@
 <div id="devmember">
     conkan開発協力者は、その権限により下記の3種類に分類される。
     <ul>
-        <li>リポジトリ管理者
+        <li><a href="#repowner">リポジトリ管理者</a>
         <div>
             GitHub conkanリポジトリのすべての操作権限をもつ。<br/>
             <small>(実際には、<strong>conkan Organization</strong>のowner権限を持つ者)</small><br/>
-            新たなリポジトリの作成や、チーム開発者の登録を受け持つ。<br/>
+            リポジトリ自体の管理作業として、新たなリポジトリの作成や、チーム開発者の登録を受け持つ。<br/>
+            開発作業として、PullRequestに対応したdevelopブランチへのマージ、releaseブランチの作成と正式版としてリリース を受け持つ。
         </div>
         </li>
-        <li>チーム開発者
+        <li><a href="#innerdev">チーム開発者</a>
         <div>
             GitHub conkanリポジトリへの書き込み権をもつ。<br/>
             <small>(実際には、<strong>conkan Organization</strong>のcollaboratorsチームに属している者。リポジトリ管理者を含む)</small><br/>
-            GitHub conkanリポジトリでのブランチ作成、developブランチへのマージを受け持つ。
+            GitHubのIssue/PullRequestにコメントする(コードレビュー)<br/>
+            GitHub conkanリポジトリで開発ブランチを作成し、実装する。
         </div>
         </li>
-        <li>外部開発者
+        <li><a href="outerdev">外部開発者</a>
         <div>
             GitHubのアカウントを持ち、conkanの開発に協力する。<br/>
             <small>(conkanの開発に参加するためには、GitHubのアカウントがあるだけで良い)</small><br/>
-            GitHubのIssueにコメントする(コードレビュー)<br/>
-            GitHub conkanリポジトリを自分のリポジトリにforkし、PullRequestを発行する。
+            GitHubのIssue/PullRequestにコメントする(コードレビュー)<br/>
+            GitHub conkanリポジトリを自分のリポジトリにforkし、実装する。
         </div>
         </li>
     <ul/>
 </div><!-- /devmember -->
 
+<h3><a id="repowner" class="anchor" href="#repowner" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
+    リポジトリ管理者による開発フロー
+</h3>
+
+<div id="repownerdev">
+    <ol type="1">
+        <li>リポジトリ管理者としては、実際の開発作業(実装)は行わない。<br/>
+            開発作業時には、チーム開発者として振る舞う。</li>
+        <li>PullRequestの内容をチェックし、問題がなければ<strong>developブランチ</strong>にマージする。
+            <div><small><strong>developブランチ</strong>は、常に開発版としてデプロイし運用可能であることを保証する。</small></div>
+        </li>
+        <li>適切なタイミング(年1度、など)でreleaseブランチを作成し、正式版としてリリースする。<br/>
+            リリース版は<a href="/foruser/devops.html">conkan動作環境構築方法</a>で利用できる形式で提供する。
+            <div><small>
+                ただし、<a href="https://github.com/conkan/conkan.github.io" target="_blank">conkan.github.io</a>は例外であり、任意の時期に<strong>developブランチ</strong>の内容を<strong>masterブランチ</strong>にマージすることで、デプロイ/リリースを同時に実施する。<br/>
+                これはもちろん、GitHubページの特性による
+            </small></div>
+        </li>
+    </ol>
+</div> <!-- /repownerdev -->
+
+<h3><a id="innerdev" class="anchor" href="#innerdev" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
+    チーム開発者による開発フロー
+</h3>
+
+<div id="innerdevdev">
+    <ol type="1">
+        <li>リポジトリを、自分の開発環境にcloneする。<br/>
+            <small>一度だけで良いが、定期的にpullし最新の状況に保つこと</small>
+        </li>
+        <li>対応するIssueに、自分が担当する旨明記する。</li>
+        <li>自分の開発環境で、developブランチから実装用ブランチを作成し、実装を実施する。
+            <div><small>実装用ブランチの作成は、<a href="#gitflow">git flowモデル</a>に従う。</small></div>
+            <div class="comment"><span id="gitflow" class="anchor">※</span>
+                git flowについては 「Gitブランチを使いこなすgit-flow／GitHub Flow入門」
+                <dl>
+                    <dd><a href="http://www.atmarkit.co.jp/ait/articles/1311/28/news042.html" target="_blank">git-flowのインストールとブランチ運用前のリポジトリ準備</a></dd>
+                    <dd><a href="http://www.atmarkit.co.jp/ait/articles/1401/06/news013.html" target="_blank">図とコマンドで分かる！ git-flowによる開発の流れと使い方</a></dd>
+                </dl>
+                などを参考のこと
+            </div><!-- /gitflow -->
+        </li>
+        <li>実装/評価が完了したら、<strong>conkan-GitHubリポジトリ</strong>に<strong>実装用ブランチ</strong>をpushし、<strong>developブランチ</strong>にマージするよう、PullRequestを発行する。
+            <div><small>もちろん、実装中や評価前に、議論を目的にPullRequestを発行するのが望ましい。<br/>
+            その場合、PullRequest名で作業中であることがわかるようにすること。(習慣的に、先頭に[WIP]を付ける)</small></div>
+        </li>
+        <li>自分の対応Issue以外のIssueやPullRequestの内容をチェックし、コメントする(コードレビュー)</li>
+    </ol>
+</div><!-- /innerdevdev -->
+
 <h3><a id="outerdev" class="anchor" href="#outerdev" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
     外部開発者による開発フロー
 </h3>
 
-<div id="devmember">
-    リポジトリを使った分散開発にあたり、各開発者は原則として下記の手順を取る。
+<div id="outerdevdev">
     <ol type="1">
-        <li>対応するIssueに、自分が担当する旨明記する。</li>
-        <li>自分の開発環境で、developブランチから実装用ブランチを作成し、実装を実施する。
-            <div><small>チーム開発者であれば<a href="#gitflow">git flowモデル</a>に従う。<br/>
-            そうでない場合は、対象リポジトリを自分のGitHubリポジトリにforkする。forkしたリポジトリの作業フローは任意。</small></div>
+        <li>対象リポジトリを自分のGitHubリポジトリにforkする。<br/>
+            <small>一度だけで良いが、定期的にpullし最新の状況に保つこと<br/>
+                また、forkしたリポジトリの作業フローは任意。</small>
         </li>
-        <li>実装/評価が完了したら、conkan-GitHubリポジトリの<strong>developブランチ</strong>にマージするよう、PullRequestを発行する。
+        <li>対応するIssueに、自分が担当する旨明記する。</li>
+        <li>自分のGitHubリポジトリ(forkしたもの)に、実装を実施する。</li>
+        <li>実装/評価が完了したら、<strong>自分のGitHubリポジトリ(forkしたもの)の対応ブランチ</strong>の内容を、<strong>conkan-GitHubリポジトリのdevelopブランチ</strong>にマージするよう、PullRequestを発行する。
             <div><small>もちろん、実装中や評価前に、議論を目的にPullRequestを発行するのが望ましい。<br/>
             その場合、PullRequest名で作業中であることがわかるようにすること。(習慣的に、先頭に[WIP]を付ける)</small></div>
         </li>
-        <li>リポジトリ管理者は、PullRequestの内容をチェックし、問題がなければ<strong>developブランチ</strong>にマージする。
-            <div><small><strong>developブランチ</strong>は、常に開発版としてデプロイし運用可能であることを保証する。</small></div>
-        </li>
+        <li>自分の対応Issue以外のIssueやPullRequestの内容をチェックし、コメントする(コードレビュー)</li>
     </ol>
-    <br/>
-    リポジトリ管理者は、適切なタイミング(年1度、など)でreleaseブランチを作成し、正式版としてリリースする。<br/>
-    リリース版は<a href="/foruser/devops.html">conkan動作環境構築方法</a>で利用できる形式で提供する。
-    <div><small>ただし、<a href="https://github.com/conkan/conkan.github.io" target="_blank">conkan.github.io</a>は例外であり、<strong>developブランチ</strong>の内容を<strong>masterブランチ</strong>にマージすることで、デプロイ/リリースを同時に実施する。<br/>
-    これはもちろん、GitHubページの特性による</small></div>
-    <div class="comment"><span id="gitflow" class="anchor">※</span>
-        git flowについては 「Gitブランチを使いこなすgit-flow／GitHub Flow入門」
-        <dl>
-            <dd><a href="http://www.atmarkit.co.jp/ait/articles/1311/28/news042.html" target="_blank">git-flowのインストールとブランチ運用前のリポジトリ準備</a></dd>
-            <dd><a href="http://www.atmarkit.co.jp/ait/articles/1401/06/news013.html" target="_blank">図とコマンドで分かる！ git-flowによる開発の流れと使い方</a></dd>
-        </dl>
-        などを参考のこと
-    </div>
-</div> <!-- /github -->
+</div> <!-- /outerdevdev -->
 
 <footer class="site-footer">
   <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
