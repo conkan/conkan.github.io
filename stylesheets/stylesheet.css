@@ -232,13 +232,18 @@ a {
 .main-content .line * {
   display: inline; }
 
-.main-content div.tbllist {
+.main-content div.tbllist, .main-content div.thal {
   margin-left: 2rem; }
-  .main-content div.tbllist table th, .main-content div.tbllist table td {
+  .main-content div.tbllist table th, .main-content div.tbllist table td,
+  .main-content div.thal table th, .main-content div.thal table td {
     padding-top: 0;
     padding-bottom: 0; }
+  .main-content div.thal table th, .main-content div.thal table td {
+    border-color:   black; }
   .main-content div.tbllist table th {
     text-align: right; }
+  .main-content div.thal table th {
+    text-align: left; }
 
 .main-content .comment {
   margin-left: 2rem;

@@ -31,19 +31,409 @@
     <H2><a id="patic_regist" class="anchor" href="#patic_regist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
         参加申込フロントエンド</H2>
 
-    <a href="/fordev/devops.html#patic_regist">開発環境構築方法</a>と同じ。<br/>
+    ・・・検討中・・・
     <br/>
 
     <H2><a id="prog_regist" class="anchor" href="#prog_regist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
         企画申込フロントエンド</H2>
 
-    <a href="/fordev/devops.html#prog_regist">開発環境構築方法</a>と同じ。<br/>
+    <B>V1.0.0</B><br/>
+    企画申し込みフロントエンドは、通常のPerlによるCGIとして動作するため、
+    一般的なhttpdサーバ環境を構築し、適切なディレクトリに企画申込フロントエンドGitリポジトリをcloneする。<br/>
+    なお、以下のPerlバージョン/モジュールに依存するため、事前にインストールしておくこと。
+    <div class="tbllist">
+        <table>
+            <tr><td colspan="2">Perl5.14以上 COREモジュール</td></tr>
+            <tr><td>&nbsp;</td><td>CGI CGI::Carp Encode File::Basename Net::SMTP Sys::Hostname</td></tr>
+            <tr><td colspan="2">CPANモジュール</td></tr>
+            <tr><td>&nbsp;</td><td>CGI::Session HTML::Template HTTP::Request::Common LWP::UserAgent<br/>
+                    MIME::Base64 Try::Tiny Data::Dumper HTML::FillInForm JSON LWP::Protocol::https</td></tr>
+        </table>
+    </div>
     <br/>
+    Git clone後、大会ごとに下記ファイルを修正する必要がある。
+    <div class="thal">
+        <table>
+            <tr><th>images/favicon.ico</th>
+                <td>企画申し込みページfavicon 大会ごとに作成</td></tr>
+            <tr><th>images/header_logo.png</th>
+                <td>企画申し込みページヘッダイメージファイル 大会ごとに作成</td></tr>
+            <tr><th>index.html</th>
+                <td>index_stable.htmlをシンボリックリンクする 
+                    (メンテナンス時表示を切り替えるための準備)</td></tr>
+            <tr><th>pgreglib.pm</th>
+                <td>pgreglib.pm_defaultをコピー後、修正</td></tr>
+        </table>
+    </div>
+    <br/>
+    大会固有の定義は、pgreglib.pmの下記部分を修正して設定する。
+    <div class="thal">
+        <table>
+            <tr><th>CONNAME</th>
+                <td>大会愛称      ex. CCCC</td></tr>
+            <tr><th>CONPERIOD</th>
+                <td>有効期間      ex. 2015-2016</td></tr>
+            <tr><th>FULLNAME</th>
+                <td>大会正式名称  ex. 第NN回日本SF大会 CCCC</td></tr>
+            <tr><th>ENTADDR</th>
+                <td>メールヘッダ差出人アドレス</td></tr>
+            <tr><th>ENVFROM</th>
+                <td>ENVELOPE FROM アドレス</td></tr>
+            <tr><th>PGSTAFF</th>
+                <td>企画管理者アドレス (ML)</td></tr>
+            <tr><th>MIMENAME</th>
+                <td>'第XX回日本SF大会 XXXX実行委員会' をMIME化した値</td></tr>
+            <tr><th>MIMEPGSG</th>
+                <td>'XXXX企画受付' をMIME化した値</td></tr>
+            <tr><th>CONKANURL</th>
+                <td>conkanトップURL</td></tr>
+            <tr><th>CONKANPASS</th>
+                <td>conkan WebIF利用者(admin)パスワード</td></tr>
+            <tr><th>SMTPSERVER</th>
+                <td>メールサーバ</td></tr>
+        </table>
+    </div>
 
     <H2><a id="conkan_program" class="anchor" href="#conkan_program" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
         conkan企画管理サブシステム</H2>
-    ・・・作成中・・・
+
+    <B>V1.0.0</B><br/>
+    
+    同一のホスト上で、nginx(リバースプロキシ) conkan_program本体、mysql(Database)をDockerコンテナとして動かす場合について記載する。<br/>
+    起動するホストは、Dockerコンテナを動かす事ができれば良い。<br/>
     <br/>
+    conkan_programのサービストップURLは<br/>
+    https://<B>起動するホストのFQDN</B>/<B>CONKAN_PROGRAM_TOP</B>/<br/>
+    となる。<B>CONKAN_PROGRAM_TOP</B>は、nginxの設定ファイルとconkan_program初期化時の値として指定する。<br/>
+
+    以下、任意のディレクトリ<B>TOP</B>下で作業する
+
+    <H3>永続データディレクトリ作成</H3>
+    各コンテナがmountして永続データ(設定ファイルを含む)を格納するディレクトリを作成する
+
+    <div class="thal">
+        <table>
+            <tr><th>コンテナ種別</th>
+                <th>起動コンテナリポジトリ</th>
+                <th>作成ディレクトリ</th>
+            <tr><th>mysql</th>
+                <td>mysql:5.5</td>
+                <td><B>TOP</B>/DB/mysql
+                </td>
+            </tr>
+            <tr><th>conkan_program</th>
+                <td>conkan/conkan_program:1.0.0</td>
+                <td>/var/log/conkanprog<br/>
+                    <B>TOP</B>/conkan_program/backup<br/>
+                    <B>TOP</B>/conkan_program/conkan
+                </td>
+            </tr>
+            <tr><th>nginx</th>
+                <td>nginx:latest</td>
+                <td>/var/log/nginx<br/>
+                    <B>TOP</B>/nginx/conf<br/>
+                    <B>TOP</B>/nginx/conf/pki<br/>
+                    <B>TOP</B>/nginx/conf/pki/nginx
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <H3>設定ファイル作成</H3>
+
+    <div class="thal">
+        <table>
+            <tr><th>コンテナ種別</th>
+                <th>設定ファイル</th>
+                <th>設定ファイル内容</th>
+            </tr>
+            <tr><th>mysql</th>
+                <td>なし</td>
+                <td></td>
+            </tr>
+            <tr><th>conkan_program</th>
+                <td><B>TOP</B>/conkan_program/conkan/conkan.yml</td>
+                <td>コンテナに含まれる、/root/app/conkan/conkan.yml_default をcopy</td>
+            </tr>
+            <tr><th rowspan="2">nginx</th>
+                <td><B>TOP</B>/nginx/conf/nginx.conf</td>
+                <td>コンテナに含まれる、/etc/nginx/nginx.conf をcopyし、下記部分を修正する<br/>
+                    <B>TLSの設定</B><br/>
+<pre>
+ssl_certificate     "/etc/pki/nginx/cert.crt";
+ssl_certificate_key "/etc/pki/nginx/cert.key";
+</pre>
+                    <B>リバースプロキシ設定</B><br/>
+                    TLSサーバブロックの中で<br/>
+<pre>
+location /<B>CONKAN_PROGRAM_TOP</B> {
+    proxy_pass http://conkanprog:9002;
+    proxy_redirect / /<B>CONKAN_PROGRAM_TOP</B>
+}
+</pre>
+                </td>
+            </tr>
+            <tr>
+                <td><B>TOP</B>/nginx/conf/pki/nginx/cert.crt<br/>
+                    <B>TOP</B>/nginx/conf/pki/nginx/cert.key<br/>
+                </td>
+                <td>サーバ証明書を格納</td>
+            </tr>
+        </table>
+    </div>
+
+    <H3>起動スクリプトファイル作成</H3>
+    <div class="thal">
+        <table>
+            <tr><th>コンテナ種別</th>
+                <th>起動スクリプト名</th>
+                <th>起動スクリプト名内容</th>
+            </tr>
+            <tr><th>mysql</th>
+                <td><B>TOP</B>/DB/>run.sh</td>
+                <td>
+<pre>
+#!/bin/bash
+if [ $1 ]; then
+    MRPW=$1
+else
+    echo 'Usage: run.sh <MYSQL_ROOT_PASSWD>'
+    exit
+fi
+NAME='mysql'
+RUNOPT="-d --restart=always"
+PASSOPT="-e MYSQL_ROOT_PASSWORD=${MRPW}"
+HOSTOPT="-e HOSTNAME=${NAME}"
+ENVOPT="${PASSOPT} ${HOSTOPT}"
+MNTOPT="-v $(pwd)/mysql:/var/lib/mysql"
+
+STAT=`docker inspect ${NAME} | grep Status | awk -F'"' '{print $4}'`
+if ! [ ${STAT} ]; then
+    STAT=`docker inspect ${NAME} | grep Running | awk '{print $2}'`
+    if [ ${STAT} ]; then
+        if [ ${STAT} == 'true,' ]; then
+            STAT='running'
+        fi
+    fi
+fi
+if [ ${STAT} ]; then
+    if [ ${STAT} == 'running' ]; then
+        echo "docker stop ${NAME}"
+        docker stop ${NAME}
+    fi
+    echo "docker rm ${NAME}"
+    docker rm ${NAME}
+fi
+
+ALLOPT="${RUNOPT} --name ${NAME} ${ENVOPT} ${MNTOPT}"
+echo "docker run ${ALLOPT} mysql:5.5"
+docker run ${ALLOPT} mysql:5.5
+</pre>
+                </td>
+            </tr>
+            <tr><th>conkan_program</th>
+                <td><B>TOP</B>/conkan_program/run.sh</td>
+                <td>
+<pre>
+#!/bin/bash
+if ![ $1 = "product" ] ; then
+    echo 'Usage: run.sh product'
+    exit
+fi
+NAME="conkanprog"
+LNKOPT="--link mysql"
+ENVOPT="-e HOSTNAME=${NAME}"
+RUNOPT="-d --restart=always"
+LOGMNT="-v /var/log/conkanprog:/var/log/conkanprog"
+# in production, execute run.sh product
+BUPMNT="-v $(pwd)/backup:/root/app/backup"
+CNFMNT="-v $(pwd)/conkan/conkan.yml:/root/app/conkan/conkan.yml"
+MNTOPT="${LOGMNT} ${BUPMNT} ${CNFMNT}"
+
+STAT=`docker inspect ${NAME} | grep Status | awk -F'"' '{print $4}'`
+if ! [ ${STAT} ]; then
+    STAT=`docker inspect ${NAME} | grep Running | awk '{print $2}'`
+    if [ ${STAT} ]; then
+        if [ ${STAT} == 'true,' ]; then
+            STAT='running'
+        fi
+    fi
+fi
+if [ ${STAT} ]; then
+    if [ ${STAT} == 'running' ]; then
+        echo "docker stop ${NAME}"
+        docker stop ${NAME}
+    fi
+    echo "docker rm ${NAME}"
+    docker rm ${NAME}
+fi
+ALLOPT="${RUNOPT} --name ${NAME} ${PSET} ${MNTOPT} ${LNKOPT} ${ENVOPT}"
+echo "docker run  ${ALLOPT} conkan/conkan_program:1.0.0 ${RUNCMD}"
+docker run  ${ALLOPT} conkan/conkan_program:1.0.0 ${RUNCMD}
+</pre>
+                </td>
+            </tr>
+            <tr><th>nginx</th>
+                <td><B>TOP</B>/nginx/run.sh</td>
+                <td>
+<pre>
+#!/bin/bash
+NAME='nginx'
+PSET="-p 443:443 -p 80:80"
+RUNOPT="-d --restart=always"
+LOGMNT="-v /var/log/nginx:/var/log/nginx"
+CNFMNT="-v $(pwd)/conf/nginx.conf:/etc/nginx/nginx.conf"
+SSLMNT="-v $(pwd)/conf/pki/nginx:/etc/pki/nginx"
+MNTOPT="${LOGMNT} ${CNFMNT} ${SSLMNT}"
+LINK="--link conkanprog"
+
+STAT=`docker inspect ${NAME} | grep Status | awk -F'"' '{print $4}'`
+if ! [ ${STAT} ]; then
+    STAT=`docker inspect ${NAME} | grep Running | awk '{print $2}'`
+    if [ ${STAT} ]; then
+        if [ ${STAT} == 'true,' ]; then
+            STAT='running'
+        fi
+    fi
+fi
+if [ ${STAT} ]; then
+    if [ ${STAT} == 'running' ]; then
+        echo "docker stop ${NAME}"
+        docker stop ${NAME}
+    fi
+    echo "docker rm ${NAME}"
+    docker rm ${NAME}
+fi
+
+ALLOPT="${RUNOPT} --name ${NAME} ${PSET} ${MNTOPT} ${LINK}"
+echo "docker run ${ALLOPT} nginx"
+docker run ${ALLOPT} nginx
+</pre>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <H3>コンテナ起動</H3>
+
+    mysql, conkan_program, nginx の順にコンテナを起動する。<br/>
+    そのためのスクリプト<B>TOP</B>/run.sh は以下の通り。<br/>
+    ここで指定する引数 <B>MYSQL_ROOT_PASSWD</B>は、データベース作成時にのみ使用する。
+<pre>
+#!/bin/bash
+if [ "$1" ]; then
+    MRPW=$1
+else
+    echo 'Usage: run.sh <MYSQL_ROOT_PASSWD>'
+    exit
+fi
+cd ~/DB
+. ./run.sh ${MRPW}
+cd ~/conkan_program
+. ./run.sh product
+cd ~/nginx
+. ./run.sh
+</pre>
+    <br/>
+
+    <H3>データベース設定</H3>
+    起動したconkan_programコンテナで、データベースを作成する。<br/>
+    以下、prompt&gt; は起動ホストでの作業、
+    conkanprog&gt; はconkan_programコンテナでの作業、
+    mysql&gt; はconkan_programコンテナで起動したmysqlクライアントでの作業
+    を示す。<br/>
+    <B>MYSQL_ROOT_PASSWD</B>は コンテナ起動時に指定したパスワードである。<br/>
+    <B>DB名</B>, <B>管理ユーザ名</B>, <B>管理ユーザパスワード</B>は、conkan_program初期化時に使用する。
+    
+<pre>
+prompt> docker exec -i -t conkanprog bash
+conkanprog> mysql -u root -p <B>MYSQL_ROOT_PASSWD</B>
+mysql> create database <B>DB名</B> default character set utf8;
+mysql> grant all on <B>DB名</B>.* to <B>管理ユーザ名</B> identified by '<B>管理ユーザパスワード</B>';
+mysql> grant reload on *.* to <B>管理ユーザ名</B>;
+mysql> flush privileges;
+mysql> exit;
+conkanprog> exit;
+prompt>
+</pre>
+
+    <H3>CybozuLiveアプリケーション登録</H3>
+    conkan_program スタッフ登録時の本人認証として、CybozuLiveの特定のグループに属していることを確認する。<br/>
+    そのため、conkan_programごとにCybozuLiveアプリケーションを登録する必要がある。<br/>
+    以下の値で登録する。
+    <div class="thal">
+        <table>
+            <tr><th>項目名</th>
+                <th>設定する値</th>
+            </tr>
+            <tr><th>アプリケーション名</th>
+                <td>任意の値</td>
+            </tr>
+            <tr>
+                <th>アプリケーションの種類</th>
+                <td>ウェブブラウザ</td>
+            </tr>
+            <tr>
+                <th>コールバックURL</th>
+                <td><B>conkan_programトップURL</B>/addstaff/cybozu</td>
+            </tr>
+            <tr>
+                <th>アクセスレベル</th>
+                <td>レベルA</td>
+            </tr>
+        </table>
+    </div>
+
+    登録後表示される<B>ConsumerKey</B>と<B>ConsumerSecret</B>は、conkan_program初期化時に使用する。
+
+    <H3>conkan_program初期化</H3>
+
+    <B>conkan_programトップURL</B>/にアクセスすると、初回のみ【conkan初期化ページ】 が表示されるので、以下の値を設定する。<br/>
+    <div class="thal">
+        <table>
+            <tr><th>項目名</th>
+                <th>設定する値</th>
+            </tr>
+            <tr><th>adminパスワード</th>
+                <td>conkan_program特殊アカウント adminのパスワード<br/>
+                    最初の管理者登録と、WebAPIによる企画登録時にのみ使用する
+                </td>
+            </tr>
+            <tr><th>DBサーバ</th>
+                <td>データベースサーバのFQDNまたはIPアドレス<br/>
+                    同一ホスト上のコンテナで動かす場合、<B>mysql</B>
+                </td>
+            </tr>
+            <tr><th>DB名</th>
+                <td>データベース設定で使用した <B>DB名</B></td>
+            </tr>
+            <tr><th>DBユーザ</th>
+                <td>データベース設定で使用した <B>管理ユーザ名</B></td>
+            </tr>
+            <tr><th>DBパスワード</th>
+                <td>データベース設定で使用した <B>管理ユーザパスワード</B></td>
+            </tr>
+            <tr><th>表示切り替え時刻</th>
+                <td>00:00をまたがったスケジュールを可能にする時のシフト時間</td>
+            </tr>
+            <tr><th>公開URIプレフィックス</th>
+                <td>リバースプロキシによるURI変更時のパス<B>CONKAN_PROGRAM_TOP</B>
+                </td>
+            </tr>
+            <tr><th>コンシュマートークンキー</th>
+                <td>CybozuLiveアプリケーション登録 で取得した <B>ConsumerKey</B></td>
+            </tr>
+            <tr><th>コンシュマーシークレット</th>
+                <td>CybozuLiveアプリケーション登録 で取得した <B>ConsumerSecret</B></td>
+            </tr>
+            <tr><th>グループ</th>
+                <td>登録可否を判断するCybozuLiveグループ名</td>
+            </tr>
+        </table>
+    </div>
+
+    すべての値を設定し、「初期化実行」をクリックすると、conkan初期化処理を実施する。<br/>
+    初期化処理完了後、表示に従って adminとしての再login、管理者の登録 を行なう。
 
     <H2><a id="conkan_stakeholder" class="anchor" href="#conkan_stakeholder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
         conkan関係者管理サブシステム</H2>
