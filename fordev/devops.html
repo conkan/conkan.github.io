@@ -32,54 +32,16 @@
     <H2><a id="patic_regist" class="anchor" href="#patic_regist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
         参加申込フロントエンド</H2>
 
-    参加申し込みフロントエンドは、通常のPerlによるCGIとして動作するため、
-    一般的なhttpdサーバ環境を構築し、適切なディレクトリに参加申込フロントエンドGitリポジトリをcloneする。<br/>
-    ・・・Git clone後の手順 検討中・・・<br/>
-    なお、以下のPerlバージョン/モジュールに依存するため、事前にインストールしておくこと。
-    <div class="tbllist">
-        <table>
-            <tr><td>調査中</td></tr>
-        </table>
-    </div>
-    <div class="memo">
-        依存するPerlバージョン/モジュールの固定のため、参加申し込みフロントエンドをDockerコンテナイメージとしても提供する。<br/>
-        開発環境ではCGIそのものはDockerコンテナイメージの中には含まず、コンテナ起動時に-vでマウントする。<br/>
-    </div>
-    <br/>
+    ・・・検討中・・・<br/>
 
     <H2><a id="prog_regist" class="anchor" href="#prog_regist" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
         企画申込フロントエンド</H2>
 
-    企画申し込みフロントエンドは、通常のPerlによるCGIとして動作するため、
-    一般的なhttpdサーバ環境を構築し、適切なディレクトリに企画申込フロントエンドGitリポジトリをcloneする。<br/>
+    企画申し込みフロントエンドは、V1.2.0以降 Dockerコンテナとして動作する。
+    開発環境ではシステムそのものはDockerコンテナイメージの中には含まず、コンテナ起動時に-vでマウントする。<br/>
+
+    そのため、まずDockerコンテナ動作環境を構築し、任意のディレクトリに企画申し込みフロントエンドGitリポジトリをcloneする。<br/>
     Git clone後の手順は、リポジトリのREADME.mdを参照。<br/>
-    なお、以下のPerlバージョン/モジュールに依存するため、事前にインストールしておくこと。
-    <div class="tbllist">
-        <table>
-            <tr><td colspan="2">Perl5.14以上</td></tr>
-            <tr><td>COREモジュール</td><td>CGI</td></tr>
-            <tr><td>&nbsp;</td><td>CGI::Carp</td></tr>
-            <tr><td>&nbsp;</td><td>Encode</td></tr>
-            <tr><td>&nbsp;</td><td>File::Basename</td></tr>
-            <tr><td>&nbsp;</td><td>Net::SMTP</td></tr>
-            <tr><td>&nbsp;</td><td>Sys::Hostname</td></tr>
-            <tr><td colspan="2">CPANモジュール</td></tr>
-            <tr><td>&nbsp;</td><td>CGI::Session</td></tr>
-            <tr><td>&nbsp;</td><td>HTML::Template</td></tr>
-            <tr><td>&nbsp;</td><td>HTTP::Request::Common</td></tr>
-            <tr><td>&nbsp;</td><td>LWP::UserAgent</td></tr>
-            <tr><td>&nbsp;</td><td>MIME::Base64</td></tr>
-            <tr><td>&nbsp;</td><td>Try::Tiny</td></tr>
-            <tr><td>&nbsp;</td><td>Data::Dumper</td></tr>
-            <tr><td>&nbsp;</td><td>HTML::FillInForm</td></tr>
-            <tr><td>&nbsp;</td><td>JSON</td></tr>
-            <tr><td>&nbsp;</td><td>LWP::Protocol::https</td></tr>
-        </table>
-    </div>
-    <div class="memo">
-        依存するPerlバージョン/モジュールの固定のため、企画申し込みフロントエンドをDockerコンテナイメージとしても提供する。<br/>
-        開発環境ではCGIそのものはDockerコンテナイメージの中には含まず、コンテナ起動時に-vでマウントする。<br/>
-    </div>
     <br/>
 
     <H2><a id="conkan_program" class="anchor" href="#conkan_program" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
@@ -88,7 +50,7 @@
     conkan企画管理サブシステムは、Dockerコンテナとして動作するが、開発環境ではシステムそのものはDockerコンテナイメージの中には含まず、コンテナ起動時に-vでマウントする。<br/>
 
     そのため、まずDockerコンテナ動作環境を構築し、任意のディレクトリにconkan企画管理サブシステムGitリポジトリをcloneする。<br/>
-    Git clone後の手順は、リポジトリのREADME.md、INSTALL.md、DocMemo下の資料をを参照。<br/>
+    Git clone後の手順は、リポジトリのREADME.md、INSTALL.md、DocMemo下の資料を参照。<br/>
     <br/>
 
     <H2><a id="conkan_stakeholder" class="anchor" href="#conkan_stakeholder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>
