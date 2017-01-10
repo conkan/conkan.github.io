@@ -263,6 +263,12 @@ a {
   margin-top: 0;
   margin-bottom: 0;}
 
+.main-content .figdiv {
+    border-width: 1px;
+    border-style: solid;
+    border-color: gray; 
+    margin-left: 4rem;
+    margin-bottom: 1rem; }
 @media screen and (min-width: 86em ) {
   .main-content {
     max-width: 86rem;
